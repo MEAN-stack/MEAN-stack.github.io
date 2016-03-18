@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html ng-app="exampleApp">
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.js"></script>
+	<script src="slider.js"></script>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script>
+      angular.module("exampleApp", ["slider"])
+      .controller("sliderCtrl", function($scope, $interval) {
+        $scope.settings = {
+          range: {
+			min: -250,
+			max: 100
+		  },
+		  value1: 50,
+		  value2: -50
+        } 
+      })
+    </script>
+  </head>
+  <body ng-controller="sliderCtrl">
+    <div class="container" style="padding:20px;">
+      <div my-slider slidermin="settings.range.min" slidermax="settings.range.max" sliderval="settings.value1" style="margin:20px"></div>
+      <div my-slider slidermin="settings.range.min" slidermax="settings.range.max" sliderval="settings.value2" style="margin:20px"></div>
+	  <form>
+        <div class="form-group">
+          <label for="handlepos">Slider Value</label>
+          <input id="handlepos" type="text" ng-model="settings.value1">
+        </div>
+		<div class="form-group">
+          <label for="handlepos">Slider2 Value</label>
+          <input id="handlepos" type="text" ng-model="settings.value2">
+        </div>
+        <div class="form-group">
+          <label for="handlepos">Min Value</label>
+          <input id="min" type="text" ng-model="settings.range.min">
+        </div>
+        <div class="form-group">
+          <label for="handlepos">Max Value</label>
+          <input id="max" type="text" ng-model="settings.range.max">
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
