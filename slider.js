@@ -1,57 +1,63 @@
-angular.module("slider", [])
+angular.module("slider.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("slider.html",
+		    "<style>\n"+
+		    ".slider-target {\n"+
+		    "  position: relative;\n"+
+  		    "  width: 90%;\n"+
+  		    "  height: 20px;\n"+
+  		    "  display: inline-block;\n"+
+  		    "  border-radius: 4px;\n"+
+  		    "  border: 1px solid #e0e0e0;\n"+
+  		    "  background-color: red;\n"+
+		    "}\n"+
+		    ".slider-origin {\n"+
+  		    "  position: absolute;\n"+
+  		    "  top: 0;\n"+
+  		    "  left: 0;\n"+
+  		    "  bottom: 0;\n"+
+  		    "  right: 0;\n"+
+		    "}\n"+
+		    ".slider-positive {\n"+
+  		    "  position: absolute;\n"+
+  		    "  top: 0;\n"+
+  		    "  left: 0;\n"+
+  		    "  bottom: 0;\n"+
+  		    "  right: 0;\n"+
+  		    "  background-color:blue;\n"+
+  		    "  border-top-right-radius:4px;\n"+
+  		    "  border-bottom-right-radius:4px;\n"+
+		    "}\n"+
+		    ".slider-handle {\n"+
+  		    "  position: relative;\n"+
+  		    "  width: 20px;\n"+
+  		    "  height: 18px;\n"+
+  		    "  left: -10px;\n"+
+  		    "  display: inline-block;\n"+
+  		    "  background-color: #202020;\n"+
+  		    "  cursor: \"pointer\";\n"+
+		    "}\n"+
+		    ".slider-icon {\n"+
+  		    "  position: relative;\n"+
+ 		    "  font-size: 28px;\n"+
+  		    "  top: -5px;\n"+
+  		    "  left: -3px;\n"+
+  		    "  color: green;\n"+
+		    "}\n"+
+			"</style>\n"+
+		    "<div class=\"slider-positive\"></div>\n"+
+		    "<div class=\"slider-origin\">\n"+
+			"  <div class=\"slider-handle\">\n"+
+			"    <span class=\"glyphicon glyphicon-expand slider-icon\"></span>\n"+
+			"  </div>\n"+
+			"</div>\n"
+    );
+}]);
+angular.module("slider", ["slider.html"])
       .directive('mySlider', ['$document', function($document) {
         return {
-          template: 
-		    '<style>'+
-		    '.slider-target {'+
-		    '  position: relative;'+
-  		    '  width: 90%;'+
-  		    '  height: 20px;'+
-  		    '  display: inline-block;'+
-  		    '  border-radius: 4px;'+
-  		    '  border: 1px solid #e0e0e0;'+
-  		    '  background-color: red;'+
-		    '}'+
-		    '.slider-origin {'+
-  		    '  position: absolute;'+
-  		    '  top: 0;'+
-  		    '  left: 0;'+
-  		    '  bottom: 0;'+
-  		    '  right: 0;'+
-		    '}'+
-		    '.slider-positive {'+
-  		    '  position: absolute;'+
-  		    '  top: 0;'+
-  		    '  left: 0;'+
-  		    '  bottom: 0;'+
-  		    '  right: 0;'+
-  		    '  background-color:blue;'+
-  		    '  border-top-right-radius:4px;'+
-  		    '  border-bottom-right-radius:4px;'+
-		    '}'+
-		    '.slider-handle {'+
-  		    '  position: relative;'+
-  		    '  width: 20px;'+
-  		    '  height: 18px;'+
-  		    '  left: -10px;'+
-  		    '  display: inline-block;'+
-  		    '  background-color: #202020;'+
-  		    '  cursor: "pointer";'+
-		    '}'+
-		    '.slider-icon {'+
-  		    '  position: relative;'+
- 		    '  font-size: 28px;'+
-  		    '  top: -5px;'+
-  		    '  left: -3px;'+
-  		    '  color: green;'+
-		    '}'+
-			'</style>'+
-		    '<div class="slider-positive"></div>'+
-		    '<div class="slider-origin">'+
-			'  <div class="slider-handle">'+
-			'    <span class="glyphicon glyphicon-expand slider-icon"></span>'+
-			'  </div>'+
-			'</div>',
+          templateUrl: function(element, attrs) {
+            return attrs.templateUrl || 'slider.html'
+          },
 	      scope: {
 	        min: "=slidermin",
 	        max: "=slidermax",
@@ -73,7 +79,7 @@ angular.module("slider", [])
             // calculate the percentage position of the zero position
             // for controls where the range goes from negative to positive
             var zeroPos = function() {
-              var zero = ((scope.min * -100)/(scope.max - scope.min + 1))
+              var zero = ((scope.min * -100)/(scope.max - scope.min))
 	          if ( zero > 100 ) {
 		        zero = 100
 	          }
@@ -86,7 +92,7 @@ angular.module("slider", [])
             // calculate the percentage position of the left edge
 	        // of the slider-origin element
             var handlePos = function() {
-	          var val = (((scope.value-scope.min) * 100)/(scope.max - scope.min + 1))
+	          var val = (((scope.value-scope.min) * 100)/(scope.max - scope.min))
 		      if ( val > 100 ) {
 		        val = 100
 		      }
@@ -117,7 +123,9 @@ angular.module("slider", [])
 		        elZero = children.eq(i);
 		      }
             }
-            elZero.css('left', zeroPos());
+			if (elZero) {
+              elZero.css('left', zeroPos());
+			}
             scope.value = clip({min:scope.min, max:scope.max}, scope.value);	  
             elOrigin.css('left', handlePos());
 	  
@@ -126,17 +134,21 @@ angular.module("slider", [])
 	          elOrigin.css('left', handlePos())
 	        });
 	        scope.$watch('min', function(newValue) {
-	          elZero.css('left', zeroPos());
+	          if (elZero) {
+			    elZero.css('left', zeroPos());
+		      }
 		      elOrigin.css('left', handlePos());
 	        });
 	        scope.$watch('max', function(newValue) {
-	          elZero.css('left', zeroPos());
+	          if (elZero) {
+			    elZero.css('left', zeroPos());
+			  }
 		      elOrigin.css('left', handlePos());
 	        });
 	  
             elHandle.on('mousedown', function(event) {
 	          targetWidth = parseInt(element.prop('offsetWidth'));
-		      valueRange = scope.max - scope.min + 1;
+		      valueRange = scope.max - scope.min;
 		
               // Prevent default dragging of selected content
               event.preventDefault();
