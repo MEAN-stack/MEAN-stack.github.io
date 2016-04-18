@@ -22,6 +22,7 @@
 	<script type="text/template" id="datepickerQuickDatesTemplate">
       <select ng-if="settings.showQuickDates" ng-model="date.quickDateValue" ng-change="change()" class="form-control datepicker" ng-options="date.description for date in quickDates">
         <option value="">Quick Dates</option>
+      </select>
     </script>
 	<script>
       angular.module("datepickerApp", [])
