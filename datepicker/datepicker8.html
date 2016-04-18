@@ -3,30 +3,31 @@
   <head>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.css">
-	<style>
-   	.datepicker {
-	  border-radius:0;
-	  width: auto;
-	  display: inline-block;
-	}
-	</style>
-	<script type="text/template" id="datepickerDayTemplate">
-	  <input ng-model="date.day" class="form-control datepicker" type="text" size="2" maxlength="2">
+    <style>
+      .datepicker {
+        border-radius:0;
+        width: auto;
+        display: inline-block;
+      }
+    </style>
+    <script type="text/template" id="datepickerDayTemplate">
+      <input ng-model="date.day" class="form-control datepicker" type="text" size="2" maxlength="2">
     </script>
-	<script type="text/template" id="datepickerMonthTemplate">
+    <script type="text/template" id="datepickerMonthTemplate">
       <select ng-model="date.month" class="form-control datepicker" name="month" ng-options="month as month for month in months"></select>
     </script>
-	<script type="text/template" id="datepickerYearTemplate">
+    <script type="text/template" id="datepickerYearTemplate">
       <input ng-model="date.year" class="form-control datepicker" type="text" name="year" size="4" maxlength="4">
     </script>
-	<script type="text/template" id="datepickerQuickDatesTemplate">
+    <script type="text/template" id="datepickerQuickDatesTemplate">
       <select ng-if="settings.showQuickDates" ng-model="date.quickDateValue" ng-change="change()" class="form-control datepicker" ng-options="date.description for date in quickDates">
         <option value="">Quick Dates</option>
+      </select>
     </script>
-	<script>
+    <script>
       angular.module("datepickerApp", [])
-	  .directive("myDatepicker", function() {
-	    return {
+      .directive("myDatepicker", function() {
+        return {
           scope: {
             dt: "=value",
             quickDates: "=quickDates"            
