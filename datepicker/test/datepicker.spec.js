@@ -60,4 +60,17 @@ describe("Datepicker directive tests: ", function() {
     expect(elem.children().eq(3).find("option").eq(3).text()).toEqual('today')
     expect(elem.children().eq(3).find("option").eq(4).text()).toEqual('End of the century')
   })
+
+  it("Generates quick dates with empty format", function(){
+    var compileFn = compileService("<div my-datepicker format='empty' quick-dates='quickDates' value='dateValue'></div>")
+    var elem = compileFn(mockScope)
+    mockScope.$digest()
+    expect(elem.children().length).toEqual(1)
+    expect(elem.children().eq(0).children().length).toEqual(5)
+    expect(elem.children().eq(0).find("option").eq(0).text()).toEqual('Quick Dates')
+    expect(elem.children().eq(0).find("option").eq(1).text()).toEqual('My birthday')
+    expect(elem.children().eq(0).find("option").eq(2).text()).toEqual('epoch')
+    expect(elem.children().eq(0).find("option").eq(3).text()).toEqual('today')
+    expect(elem.children().eq(0).find("option").eq(4).text()).toEqual('End of the century')
+  })
 })
