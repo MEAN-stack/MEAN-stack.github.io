@@ -1,8 +1,8 @@
 angular.module("datepickerTemplate", [])
 .run(["$templateCache", function($templateCache) {
-  $templateCache.put('dayTemplate', '<input ng-model="date.day" class="form-control datepicker" type="text" size="2" maxlength="2">')
+  $templateCache.put('dayTemplate', '<input ng-model-options="{ updateOn: \'blur\' }" ng-model="date.day" class="form-control datepicker" type="text" size="2" maxlength="2">')
   $templateCache.put('monthTemplate', '<select ng-model="date.month" class="form-control datepicker" name="month" ng-options="month as month for month in months"></select>')
-  $templateCache.put('yearTemplate', '<input ng-model="date.year" class="form-control datepicker" type="text" name="year" size="4" maxlength="4">')
+  $templateCache.put('yearTemplate', '<input ng-model-options="{ updateOn: \'blur\' }" ng-model="date.year" class="form-control datepicker" type="text" name="year" size="4" maxlength="4">')
   $templateCache.put('quickDatesTemplate', '<select ng-if="settings.showQuickDates" ng-model="date.quickDateValue" ng-change="change()" class="form-control datepicker" ng-options="date.description for date in quickDates"><option value="">Quick Dates</option></select>')
 }])
 angular.module("datepicker", ["datepickerTemplate"])
