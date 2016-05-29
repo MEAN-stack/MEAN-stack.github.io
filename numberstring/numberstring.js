@@ -314,7 +314,10 @@ var buttonClick = function() {
 }
 
 var stringify = function() {
-  var res = sayNumber(document.getElementById('number-digits').value, false, true);
-  console.log(res);
-  document.getElementById('result-string').innerText = res.toLocaleString();
+  var val = document.getElementById('number-digits').value
+  var n = parseInt(val, 10);
+  if (!isNaN(n)) {
+    var res = sayNumber(n, false, true);
+    document.getElementById('result-string').innerText = res.toLocaleString();
+  }
 }
