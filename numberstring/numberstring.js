@@ -316,7 +316,10 @@ var buttonClick = function() {
 var stringify = function() {
   var val = document.getElementById('number-digits').value
   var n = parseInt(val, 10);
-  if (!isNaN(n)) {
+  if (isNaN(n)) {
+    document.getElementById('result-string').innerText = 'Error'
+  }
+  else {
     var res = sayNumber(n, false, true);
     document.getElementById('result-string').innerText = res.toLocaleString();
   }
