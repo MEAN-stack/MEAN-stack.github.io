@@ -126,7 +126,7 @@ angular.module("slider", ["slider.html"])
 			if (elZero) {
               elZero.css('left', zeroPos());
 			}
-            scope.value = clip({min:scope.min, max:scope.max}, scope.value);	  
+            scope.value = clip({min:scope.min, max:scope.max}, scope.value).toFixed(2);	  
             elOrigin.css('left', handlePos());
 	  
 	        //watchers
