@@ -25,11 +25,11 @@
 	  <form>
         <div class="form-group">
           <label for="handlepos">Slider Value</label>
-          <input id="handlepos" type="text" ng-model="settings.value1">
+          <input id="handlepos" type="text" ng-model="settings.value1 | number:2">
         </div>
 		<div class="form-group">
           <label for="handlepos">Slider2 Value</label>
-          <input id="handlepos" type="text" ng-model="settings.value2">
+          <input id="handlepos" type="text" ng-model="settings.value2 | number:2">
         </div>
         <div class="form-group">
           <label for="handlepos">Min Value</label>
