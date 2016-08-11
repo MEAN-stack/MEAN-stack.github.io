@@ -161,7 +161,7 @@ angular.module("slider", ["slider.html"])
             function mousemove(event) {
               x = event.pageX - startX;
 	          scope.$apply(function() {
-		        scope.value = clip({min:scope.min, max:scope.max}, startValue + (x*valueRange)/targetWidth);
+		        scope.value = clip({min:scope.min, max:scope.max}, startValue + (x*valueRange)/targetWidth).toFixed(2);
 		      })
 		      elOrigin.css('left', handlePos());
 		      lastX = x;
